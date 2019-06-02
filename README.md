@@ -8,7 +8,7 @@ The generation of the executable jar file can be performed by issuing the follow
 
     mvn clean package
 
-This will create an executable jar file **randomstrings.jar** within the _target_ maven folder. This can be started by executing the following command:
+This will create an executable jar file `randomstrings.jar within the _target_ maven folder. This can be started by executing the following command:
 
     java -jar target/randomstrings.jar
 
@@ -22,9 +22,9 @@ See the [website][1] for more information on MicroProfile.
 
 ### Config
 
-Configuration of your application parameters ([specification][2].
+Configuration of your application parameters ([specification][2]).
 
-The example class **RandomStringsSupplier** shows you how to configure and define default values for variables.
+The example class `RandomStringsSupplier` shows you how to configure and define default values for variables.
 
 
 
@@ -32,7 +32,7 @@ The example class **RandomStringsSupplier** shows you how to configure and defin
 
 The health status can be used to determine if the 'computing node' needs to be discarded/restarted or not ([specification][3]).
 
-The class **ServiceHealthCheck** contains an example of a custom check which can be integrated to health status checks of the instance.  The index page contains a link to the status data.
+The class `ServiceHealthCheck` contains an example of a custom check which can be integrated to health status checks of the instance.  The index page contains a link to the status data.
 
 
 
@@ -40,7 +40,7 @@ The class **ServiceHealthCheck** contains an example of a custom check which can
 
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources ([specification][4]).
 
-The class **RandomStringsController** contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
+The class `RandomStringsController` contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
 
 
 
