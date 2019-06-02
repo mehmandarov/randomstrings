@@ -4,11 +4,11 @@
 
 This is a demo application built with MicroProfile and currently running setup to run on OpenLiberty. It will return a combination of a random adjective and a noun.
 
-The generation of the executable jar file can be performed by issuing the following command
+The generation of the executable jar file can be performed by issuing the following command:
 
     mvn clean package
 
-This will create an executable jar file **randomstrings.jar** within the _target_ maven folder. This can be started by executing the following command
+This will create an executable jar file **randomstrings.jar** within the _target_ maven folder. This can be started by executing the following command:
 
     java -jar target/randomstrings.jar
 
@@ -54,7 +54,7 @@ The index page contains a link to the OpenAPI information of the available endpo
 
 
 ## Author
-* [Rustam Mehmandarov][6]
+[Rustam Mehmandarov][6]
 
 
 
