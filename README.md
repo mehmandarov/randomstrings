@@ -40,16 +40,16 @@ The class **ServiceHealthCheck** contains an example of a custom check which can
 
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources ([specification][4]).
 
-The class **RandomStringsController** contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info)
+The class **RandomStringsController** contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
 
 
 
 
 ### Open API
 
-Exposes the information about your endpoints in the format of the OpenAPI v3 specification. Specification [here][5]
+Exposes the information about your endpoints in the format of the OpenAPI v3 specification ([docs][5]).
 
-The index page contains a link to the OpenAPI information of your endpoints.
+The index page contains a link to the OpenAPI information of the available endpoints for this project.
 
 
 
