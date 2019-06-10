@@ -24,7 +24,7 @@ public class RandomStringsController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Gets the a adjective noun pair",
+    @Operation(summary = "Returns the adjective-noun pair",
                description = "The pair of one random adjective and one random noun is returned as an array.")
     @Metered(name = "numberOfCalls", unit = MetricUnits.MINUTES,
              description = "Metrics to monitor numbers of calls to get random string pairs.", absolute = true)
