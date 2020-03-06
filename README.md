@@ -52,6 +52,12 @@ Exposes the information about your endpoints in the format of the OpenAPI v3 spe
 The index page contains a link to the OpenAPI information of the available endpoints for this project.
 
 
+### Deploy to Google Cloud Run
+Make sure to have a file named _exactly_ Dockerfile in the root folder of the project. 
+This is the one Google Cloud Build will be using. 
+
+gcloud builds submit --tag gcr.io/{your project name}/randomstrings
+gcloud run deploy --image gcr.io/{your project name}/randomstrings --platform managed
 
 ## Author
 [Rustam Mehmandarov][6]
