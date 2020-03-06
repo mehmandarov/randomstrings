@@ -13,11 +13,11 @@ public class RandomStringsSupplier {
 
     @Inject
     @ConfigProperty(name = "adjectivesFileName", defaultValue = "/adjectives.txt")
-    private String adjectivesFileName;
+    String adjectivesFileName;
 
     @Inject
     @ConfigProperty(name = "nounsFileName", defaultValue = "/nouns.txt")
-    private String nounsFileName;
+    String nounsFileName;
 
 
     public String[] generateRandomStringsPair() {
