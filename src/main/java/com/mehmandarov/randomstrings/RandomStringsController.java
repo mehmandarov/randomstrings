@@ -31,7 +31,6 @@ public class RandomStringsController {
     @Counted(unit = MetricUnits.NONE,
             name = "totalCountToRandomPairCalls",
             absolute = true,
-            monotonic = true,
             displayName = "Total count to random pair calls",
             description = "Total number of calls to random string pairs.",
             tags = {"calls=pairs"})

@@ -1,14 +1,16 @@
 package com.mehmandarov.randomstrings.health;
 
 import com.mehmandarov.randomstrings.RandomStringsSupplier;
-import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Liveness;
+import org.eclipse.microprofile.health.Readiness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-@Health
+@Liveness
+@Readiness
 @ApplicationScoped
 public class ServiceHealthCheck implements HealthCheck {
 

@@ -14,7 +14,7 @@ This will create an executable jar file `randomstrings.jar within the _target_ m
 
 To launch the test page, open your browser at the following URL
 
-    http://localhost:8181/randomstrings/index.html
+    http://localhost:9080/index.html
 
 See the [website][1] for more information on MicroProfile.
 

@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mehmandarov</groupId>
   <artifactId>randomstrings</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <properties>
+    <openliberty.maven.version>3.1</openliberty.maven.version>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <openliberty.version>[19.0.0.9,)</openliberty.version>
+    <final.name>randomstrings</final.name>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.eclipse.microprofile</groupId>
       <artifactId>microprofile</artifactId>
-      <version>2.1</version>
+      <version>3.2</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
-    <finalName>${project.artifactId}</finalName>
+    <finalName>randomstrings</finalName>
   </build>
   <profiles>
     <profile>
@@ -30,25 +33,9 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <build>
-        <resources>
-          <resource>
-            <directory>${basedir}/src/main/resources</directory>
-            <includes>
-              <include>**/*.*</include>
-            </includes>
-          </resource>
-          <resource>
-            <filtering>true</filtering>
-            <directory>${basedir}/src/main/liberty</directory>
-            <includes>
-              <include>**/*.*</include>
-            </includes>
-          </resource>
-        </resources>
-        <finalName>${project.artifactId}</finalName>
         <plugins>
           <plugin>
-            <groupId>net.wasdev.wlp.maven.plugins</groupId>
+            <groupId>io.openliberty.tools</groupId>
             <artifactId>liberty-maven-plugin</artifactId>
             <version>${openliberty.maven.version}</version>
             <executions>
@@ -56,9 +43,10 @@
                 <id>package-server</id>
                 <phase>package</phase>
                 <goals>
-                  <goal>create-server</goal>
-                  <goal>install-apps</goal>
-                  <goal>package-server</goal>
+                  <goal>create</goal>
+                  <goal>install-feature</goal>
+                  <goal>deploy</goal>
+                  <goal>package</goal>
                 </goals>
                 <configuration>
                   <outputDirectory>target/wlp-package</outputDirectory>
@@ -66,29 +54,16 @@
               </execution>
             </executions>
             <configuration>
-              <assemblyArtifact>
-                <groupId>io.openliberty</groupId>
-                <artifactId>openliberty-runtime</artifactId>
-                <version>${openliberty.version}</version>
-                <type>zip</type>
-              </assemblyArtifact>
-              <configFile>target/classes/config/server.xml</configFile>
-              <appArchive>${project.build.directory}/${project.artifactId}.war</appArchive>
-              <packageFile>${project.build.directory}/${project.artifactId}.jar</packageFile>
               <include>runnable</include>
-              <serverName>${project.artifactId}</serverName>
-              <installAppPackages>project</installAppPackages>
-              <configDirectory>${project.basedir}/src/main/liberty/server</configDirectory>
+              <serverName>${final.name}</serverName>
+              <bootstrapProperties>
+                <project.name>${final.name}</project.name>
+                <jwt.issuer>https://server.example.com</jwt.issuer>
+              </bootstrapProperties>
             </configuration>
           </plugin>
         </plugins>
       </build>
-      <properties>
-        <openliberty.maven.version>2.2</openliberty.maven.version>
-        <httpsPort>8543</httpsPort>
-        <openliberty.version>RELEASE</openliberty.version>
-        <httpPort>8181</httpPort>
-      </properties>
     </profile>
   </profiles>
 </project>
