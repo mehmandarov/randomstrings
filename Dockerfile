@@ -20,4 +20,5 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 COPY --from=builder /app/target/randomstrings*.jar /randomstrings.jar
 
 # Run the web service on container startup.
+EXPOSE 9080
 CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/randomstrings.jar"]
