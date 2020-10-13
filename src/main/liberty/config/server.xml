@@ -2,7 +2,7 @@
 <server description="${project.name}">
 
     <featureManager>
-        <feature>microProfile-3.2</feature>
+        <feature>microProfile-3.3</feature>
     </featureManager>
 
     <httpEndpoint host="0.0.0.0" id="defaultHttpEndpoint"

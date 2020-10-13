@@ -6,7 +6,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RandomStringsSupplier {
@@ -19,17 +22,24 @@ public class RandomStringsSupplier {
     @ConfigProperty(name = "nounsFileName", defaultValue = "/nouns.txt")
     String nounsFileName;
 
+    @Inject
+    @ConfigProperty(name ="readFromFile", defaultValue = "true")
+    Boolean readFromFile;
 
     public String[] generateRandomStringsPair() {
-        ArrayList<String> adjectives = readFile(adjectivesFileName);
-        ArrayList<String> nouns = readFile(nounsFileName);
+        System.out.println("Reading from file? " + readFromFile);
+        List<String> adjectives = readFromFile ? readFile(adjectivesFileName) : readFromEnum(Adjectives.values());
+        List<String> nouns = readFromFile ? readFile(nounsFileName) : readFromEnum(Nouns.values());
 
         return  new String[] {getRandomElement(adjectives), getRandomElement(nouns)};
     }
 
+    private List<String> readFromEnum(Enum<?>[] values) {
+        return Arrays.stream(values).map(Enum::name).map(str -> str.replaceAll("_", "-")).collect(Collectors.toList());
+    }
 
-    private ArrayList<String> readFile(String fileName) {
-        ArrayList<String> result = new ArrayList<>();
+    private List<String> readFile(String fileName) {
+        List<String> result = new ArrayList<>();
 
         try {
             InputStream is = getClass().getResourceAsStream(fileName);
@@ -48,7 +58,7 @@ public class RandomStringsSupplier {
         return result;
     }
 
-    private String getRandomElement(ArrayList<String> list)
+    private String getRandomElement(List<String> list)
     {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));

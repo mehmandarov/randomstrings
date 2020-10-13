@@ -1,0 +1,19 @@
+steps:
+  - name: maven:3.6.0-jdk-11-slim
+    entrypoint: 'mvn'
+    args: ['verify', '-DskipTests']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/randomstrings', '.']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'randomstrings'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/randomstrings:latest'
+      - '--region'
+      - 'europe-north1'
+      - '--platform'
+      - 'managed'
+images: ['gcr.io/$PROJECT_ID/randomstrings']

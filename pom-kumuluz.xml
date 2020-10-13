@@ -6,19 +6,19 @@
     <artifactId>randomstrings</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.target>11</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <kumuluzee-microprofile.version>kumuluzee-microProfile-3.2</kumuluzee-microprofile.version>
-        <kumuluz.version>3.7.0</kumuluz.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <kumuluzee-microprofile.version>kumuluzee-microProfile-3.3</kumuluzee-microprofile.version>
+        <kumuluz.version>3.9.0</kumuluz.version>
         <final.name>randomstrings</final.name>
-        <kumuluzee-config-mp.version>1.3.0</kumuluzee-config-mp.version>
+        <kumuluzee-config-mp.version>1.4.0</kumuluzee-config-mp.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>3.2</version>
+            <version>3.3</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -48,6 +48,15 @@
                         </executions>
                     </plugin>
                 </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>3.8.1</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
             <dependencyManagement>
                 <dependencies>
