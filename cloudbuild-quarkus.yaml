@@ -4,6 +4,9 @@ steps:
     args: ['verify', '-DskipTests', '-f', 'pom_quarkus.xml']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', 'Dockerfile_quarkus.jvm', '-t', 'gcr.io/$PROJECT_ID/randomstrings-quarkus', '.']
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/$PROJECT_ID/randomstrings-quarkus' ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
