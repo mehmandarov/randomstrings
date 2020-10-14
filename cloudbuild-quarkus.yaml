@@ -1,9 +1,9 @@
 steps:
   - name: maven:3.6.0-jdk-11-slim
     entrypoint: 'mvn'
-    args: ['verify', '-DskipTests']
+    args: ['verify', '-DskipTests', '-f', 'pom_quarkus.xml']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/randomstrings-quarkus', '.']
+    args: ['build', '-f', 'Dockerfile_quarkus.jvm', '-t', 'gcr.io/$PROJECT_ID/randomstrings-quarkus', '.']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
