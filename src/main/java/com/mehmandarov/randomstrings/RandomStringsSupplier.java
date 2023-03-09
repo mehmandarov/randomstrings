@@ -1,15 +1,16 @@
 package com.mehmandarov.randomstrings;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
 
 @ApplicationScoped
 public class RandomStringsSupplier {
@@ -27,7 +28,7 @@ public class RandomStringsSupplier {
     Boolean readFromFile;
 
     public String[] generateRandomStringsPair() {
-        System.out.println("Reading from file? " + readFromFile);
+        //System.out.println("Reading from file? " + readFromFile);
         List<String> adjectives = readFromFile ? readFile(adjectivesFileName) : readFromEnum(Adjectives.values());
         List<String> nouns = readFromFile ? readFile(nounsFileName) : readFromEnum(Nouns.values());
 

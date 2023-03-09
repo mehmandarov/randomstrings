@@ -1,14 +1,5 @@
 package com.mehmandarov.randomstrings;
 
-import java.awt.Choice;
-import java.beans.Transient;
-import java.lang.annotation.Native;
-import java.security.Principal;
-import java.sql.Time;
-import java.util.Set;
-
-import javax.enterprise.inject.Model;
-import javax.enterprise.inject.New;
 
 public enum Adjectives {
     Abiding,
