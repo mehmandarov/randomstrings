@@ -7,35 +7,40 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <properties>
-    <openliberty.maven.version>3.7.1</openliberty.maven.version>
-    <maven.compiler.target>11</maven.compiler.target>
-    <failOnMissingWebXml>false</failOnMissingWebXml>
-    <maven.compiler.source>11</maven.compiler.source>
     <final.name>randomstrings</final.name>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <openliberty.maven.version>3.7.1</openliberty.maven.version>
+    <jakartaee-api.maven.version>9.1.0</jakartaee-api.maven.version>
+    <microprofile.maven.version>5.0</microprofile.maven.version>
+    <maven-war-plugin.maven.version>3.3.2</maven-war-plugin.maven.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>jakarta.platform</groupId>
       <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>9.1.0</version>
+      <version>${jakartaee-api.maven.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.microprofile</groupId>
       <artifactId>microprofile</artifactId>
-      <version>5.0</version>
+      <version>${microprofile.maven.version}</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
   <build>
-    <finalName>randomstrings</finalName>
+    <finalName>${final.name}</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>3.3.2</version>
+          <version>${maven-war-plugin.maven.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -72,7 +77,6 @@
               <serverName>${final.name}</serverName>
               <bootstrapProperties>
                 <project.name>${final.name}</project.name>
-                <jwt.issuer>https://server.example.com</jwt.issuer>
               </bootstrapProperties>
             </configuration>
           </plugin>
