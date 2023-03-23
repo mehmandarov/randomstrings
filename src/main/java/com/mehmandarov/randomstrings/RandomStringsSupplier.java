@@ -28,7 +28,6 @@ public class RandomStringsSupplier {
     Boolean readFromFile;
 
     public String[] generateRandomStringsPair() {
-        //System.out.println("Reading from file? " + readFromFile);
         List<String> adjectives = readFromFile ? readFile(adjectivesFileName) : readFromEnum(Adjectives.values());
         List<String> nouns = readFromFile ? readFile(nounsFileName) : readFromEnum(Nouns.values());
 

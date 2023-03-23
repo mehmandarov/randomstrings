@@ -13,8 +13,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <openliberty.maven.version>3.7.1</openliberty.maven.version>
-    <jakartaee-api.maven.version>9.1.0</jakartaee-api.maven.version>
-    <microprofile.maven.version>5.0</microprofile.maven.version>
+    <jakartaee-api.maven.version>10.0.0</jakartaee-api.maven.version>
+    <microprofile.maven.version>6.0</microprofile.maven.version>
     <maven-war-plugin.maven.version>3.3.2</maven-war-plugin.maven.version>
   </properties>
   <dependencies>
@@ -78,6 +78,12 @@
               <bootstrapProperties>
                 <project.name>${final.name}</project.name>
               </bootstrapProperties>
+              <runtimeArtifact>
+                <groupId>io.openliberty.beta</groupId>
+                <artifactId>openliberty-runtime</artifactId>
+                <version>23.0.0.1-beta</version>
+                <type>zip</type>
+              </runtimeArtifact>
             </configuration>
           </plugin>
         </plugins>
