@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM eclipse-temurin:19
 
 COPY target/randomstrings*.jar /randomstrings.jar
 
