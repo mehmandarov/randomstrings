@@ -59,9 +59,17 @@ This is the one Google Cloud Build will be using.
 gcloud builds submit --tag gcr.io/{your project name}/randomstrings
 gcloud run deploy --image gcr.io/{your project name}/randomstrings --platform managed
 
-## Author
-[Rustam Mehmandarov][6]
+### Quarkus Native
+Build with mvn verify -f pom_quarkus.xml -Pnative -Dquarkus.native.container-build=true
 
+You need to have GraalVM installed to build locally.
+sudo xattr -r -d com.apple.quarantine /Library/Java/JavaVirtualMachines/<graalvm-version>
+
+Ensure that your path or java_home includes GraalVM, as specified in the readme.
+
+## Authors
+- [Rustam Mehmandarov][6]
+- [Mads Opheim][7]
 
 
 [1]: https://microprofile.io/
@@ -70,3 +78,4 @@ gcloud run deploy --image gcr.io/{your project name}/randomstrings --platform ma
 [4]: https://microprofile.io/project/eclipse/microprofile-metrics
 [5]: https://microprofile.io/project/eclipse/microprofile-open-api
 [6]: https://github.com/mehmandarov
+[7]: https://github.com/madsop
