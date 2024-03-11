@@ -1,4 +1,4 @@
-# MicroProfile – RandomStrings
+# Jakarta EE + MicroProfile – RandomStrings
 
 ## Introduction
 
@@ -35,6 +35,7 @@ mvn -f pom_quarkus.xml clean package
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
+## Application Set-up and Links
 
 ### Config
 Configuration of your application parameters ([specification][2]).
@@ -51,13 +52,13 @@ The Metrics exports _Telemetric_ data in a uniform way of system and custom reso
 
 The class `RandomStringsController` contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
 
-
 ### Open API
 
 Exposes the information about your endpoints in the format of the OpenAPI v3 specification ([docs][5]).
 
 The index page contains a link to the OpenAPI information of the available endpoints for this project.
 
+## Deploying the Application
 
 ### Deploy to Google Cloud Run
 Make sure to have a file named _exactly_ Dockerfile in the root folder of the project. 
@@ -67,7 +68,6 @@ This is the one Google Cloud Build will be using.
 gcloud builds submit --tag gcr.io/{your project name}/randomstrings
 gcloud run deploy --image gcr.io/{your project name}/randomstrings --platform managed
 ```
-
 
 ### Quarkus Native
 Build with `mvn verify -f pom_quarkus.xml -Pnative -Dquarkus.native.container-build=true`
