@@ -8,14 +8,16 @@
   <packaging>war</packaging>
   <properties>
     <final.name>randomstrings</final.name>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <openliberty.maven.version>3.7.1</openliberty.maven.version>
     <jakartaee-api.maven.version>10.0.0</jakartaee-api.maven.version>
-    <microprofile.maven.version>6.0</microprofile.maven.version>
-    <maven-war-plugin.maven.version>3.3.2</maven-war-plugin.maven.version>
+    <microprofile.maven.version>6.1</microprofile.maven.version>
+    <maven-war-plugin.maven.version>3.4.0</maven-war-plugin.maven.version>
+    <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+    <liberty-maven-plugin.version>24.0.0.2</liberty-maven-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -79,9 +81,9 @@
                 <project.name>${final.name}</project.name>
               </bootstrapProperties>
               <runtimeArtifact>
-                <groupId>io.openliberty.beta</groupId>
+                <groupId>io.openliberty</groupId>
                 <artifactId>openliberty-runtime</artifactId>
-                <version>23.0.0.1-beta</version>
+                <version>${liberty-maven-plugin.version}</version>
                 <type>zip</type>
               </runtimeArtifact>
             </configuration>
@@ -89,7 +91,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.2.1</version>
+            <version>${maven-enforcer-plugin.version}</version>
             <executions>
               <execution>
                 <id>enforce-maven</id>
@@ -112,17 +114,17 @@
         <dependency>
           <groupId>io.jaegertracing</groupId>
           <artifactId>jaeger-client</artifactId>
-          <version>1.5.0</version>
+          <version>1.8.1</version>
         </dependency>
         <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
-          <version>1.7.30</version>
+          <version>2.0.12</version>
         </dependency>
         <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
-          <version>1.7.30</version>
+          <version>2.0.12</version>
         </dependency>
       </dependencies>
     </profile>
