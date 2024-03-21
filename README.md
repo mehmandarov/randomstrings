@@ -1,6 +1,8 @@
 # RandomStrings – Using Jakarta EE + MicroProfile
 
-## Development: Building and Running the application locally
+## Local Build and Deploy: Building and Running the Application Locally
+
+The code can be deployed to several runtimes. This is done to illustrate the switching runtimes with minor changes to the code and to observe the performance.
 
 | Runtime          | Build                                      | Run                                                | Address                       |
 |------------------|--------------------------------------------|----------------------------------------------------|-------------------------------|
@@ -8,23 +10,24 @@
 | **Quarkus**      | ```mvn -f pom-quarkus.xml clean package``` | ```java -jar target/quarkus-app/quarkus-run.jar``` | http://localhost:8080/api/rnd |
 | **Helidon**      | ```mvn -f pom-helidon.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
 
-Note: You can run your application in `dev mode` that enables live code reloading:
+**_Note:_** You can run your Quarkus application in `dev mode` that enables live code reloading:
 
 ```shell script
 ./mvnw -f pom-quarkus.xml quarkus:dev
 ```
 
-## Building Container Images on GCP and Deploy to Cloud Run
+## Cloud Build and Deploy: Building Container Images on GCP and Deploy to Cloud Run
 
 ### Create Artifact Registry Repository
 https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 
 ### Build Images
 ```shell script
+# Quarkus - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="jvm"
-
+# Helidon - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"
-
+# OpenLiberty - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR="jvm"
 ```
 
