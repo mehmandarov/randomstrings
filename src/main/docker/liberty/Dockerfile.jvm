@@ -1,0 +1,27 @@
+# 1st stage, build the app
+FROM maven:3.9.6-eclipse-temurin-21 as maven
+WORKDIR /liberty
+
+# Create a first layer to cache the "Maven World" in the local repository.
+# Incremental docker builds will always resume after that, unless you update
+# the pom
+ADD pom-liberty.xml pom.xml
+RUN mvn package -Dmaven.test.skip
+
+# Do the Maven build!
+# Incremental docker builds will resume here when you change sources
+ADD src src
+RUN mvn package -DskipTests
+
+RUN echo "done!"
+
+# 2nd stage, build the runtime image
+FROM icr.io/appcafe/open-liberty:kernel-slim-java21-openj9-ubi-minimal
+
+COPY --chown=1001:0 --from=maven /liberty/src/main/liberty/config /config
+RUN features.sh
+
+COPY --chown=1001:0 --from=maven /liberty/target/*.war /config/apps
+RUN configure.sh
+
+EXPOSE 8080

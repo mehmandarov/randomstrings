@@ -1,19 +1,39 @@
+substitutions:
+  _APP_RUNTIME: quarkus     # default value
+  _APP_RUNTIME_FLAVOUR: jvm # default value
+  _LOCATION: europe-north1  # default value
 steps:
-  - name: maven:3.6.0-jdk-11-slim
-    entrypoint: 'mvn'
-    args: ['verify', '-DskipTests']
+  # Build using a specific Dockerfile at a custom path
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/randomstrings', '.']
+    args:
+      - build
+      - "--tag=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}"
+      - "--file=./src/main/docker/${_APP_RUNTIME}/Dockerfile.${_APP_RUNTIME_FLAVOUR}"
+      - .
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}' ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'randomstrings'
+      - 'randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/randomstrings:latest'
+      - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}:latest'
       - '--region'
-      - 'europe-north1'
+      - '${_LOCATION}'
       - '--platform'
       - 'managed'
-images: ['gcr.io/$PROJECT_ID/randomstrings']
+      - '--min-instances'
+      - '0'
+      - '--max-instances'
+      - '1'
+images: ['${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}']
+
+# SUBSTITUTION - example:
+# ** Can also be:
+# --tag=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}
+# ** And run with:
+# gcloud builds submit --config=cloudbuild.yaml \
+#  --substitutions=_LOCATION="us-east1",_REPOSITORY="my-repo",_IMAGE="my-image"
