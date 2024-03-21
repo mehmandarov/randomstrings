@@ -2,11 +2,11 @@
 
 ## Development: Building and Running the application locally
 
-| Runtime      | Build                                      | Run                                                | Address                       |
-|--------------|--------------------------------------------|----------------------------------------------------|-------------------------------|
-| Open Liberty | ```mvn -f pom-liberty.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:9080/api/rnd |
-| Quarkus      | ```mvn -f pom-quarkus.xml clean package``` | ```java -jar target/quarkus-app/quarkus-run.jar``` | http://localhost:8080/api/rnd |
-| Helidon      | ```mvn -f pom-helidon.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
+| Runtime          | Build                                      | Run                                                | Address                       |
+|------------------|--------------------------------------------|----------------------------------------------------|-------------------------------|
+| **Open Liberty** | ```mvn -f pom-liberty.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:9080/api/rnd |
+| **Quarkus**      | ```mvn -f pom-quarkus.xml clean package``` | ```java -jar target/quarkus-app/quarkus-run.jar``` | http://localhost:8080/api/rnd |
+| **Helidon**      | ```mvn -f pom-helidon.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
 
 Note: You can run your application in `dev mode` that enables live code reloading:
 
@@ -32,9 +32,9 @@ gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR
 ### Port Configuration
 Cloud Run uses port 8080 by default. All runtimes are configured to expose that port. These configurations are done in: 
 
-Quarkus: defaults to 8080
-OpenLiberty: set-up in [server.xml](src/main/liberty/config/server.xml)
-Helidon: set-up in [microprofile-config.properties](src/main/resources/META-INF/microprofile-config.properties)
+* **Quarkus**: defaults to 8080
+* **OpenLiberty**: set-up in [server.xml](src/main/liberty/config/server.xml)
+* **Helidon**: set-up in [microprofile-config.properties](src/main/resources/META-INF/microprofile-config.properties)
 
 ### Config
 Configuration of your application parameters ([specification][2]).
