@@ -1,41 +1,40 @@
-# Jakarta EE + MicroProfile – RandomStrings
+# RandomStrings – Using Jakarta EE + MicroProfile
 
-## Introduction
+## Development: Building and Running the application locally
 
-### Run with Open Liberty
-This is a demo application built with MicroProfile and currently running setup to run on OpenLiberty. It will return a combination of a random adjective and a noun.
+| Runtime      | Build                                      | Run                                                | Address                       |
+|--------------|--------------------------------------------|----------------------------------------------------|-------------------------------|
+| Open Liberty | ```mvn -f pom-liberty.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:9080/api/rnd |
+| Quarkus      | ```mvn -f pom-quarkus.xml clean package``` | ```java -jar target/quarkus-app/quarkus-run.jar``` | http://localhost:8080/api/rnd |
+| Helidon      | ```mvn -f pom-helidon.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
 
-The generation of the executable jar file can be performed by issuing the following command:
+Note: You can run your application in `dev mode` that enables live code reloading:
 
-    mvn clean package
-
-This will create an executable jar file `randomstrings.jar within the _target_ maven folder. This can be started by executing the following command:
-
-    java -jar target/randomstrings.jar
-
-To launch the test page, open your browser at the following URL
-
-    http://localhost:9080/index.html
-
-See the [website][1] for more information on MicroProfile.
-
-### Run with Quarkus
-
-#### Running Quarkus in Dev Mode
-You can run your application in dev mode that enables live coding using:
 ```shell script
-./mvnw -f pom_quarkus.xml quarkus:dev
+./mvnw -f pom-quarkus.xml quarkus:dev
 ```
 
-#### Running Quarkus
-Build:
-```shell script
-mvn -f pom_quarkus.xml clean package
-```
+## Building Container Images on GCP and Deploy to Cloud Run
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+### Create Artifact Registry Repository
+https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
+
+### Build Images
+```shell script
+gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="jvm"
+
+gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"
+
+gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR="jvm"
+```
 
 ## Application Set-up and Links
+### Port Configuration
+Cloud Run uses port 8080 by default. All runtimes are configured to expose that port. These configurations are done in: 
+
+Quarkus: defaults to 8080
+OpenLiberty: set-up in [server.xml](src/main/liberty/config/server.xml)
+Helidon: set-up in [microprofile-config.properties](src/main/resources/META-INF/microprofile-config.properties)
 
 ### Config
 Configuration of your application parameters ([specification][2]).
@@ -53,21 +52,11 @@ The Metrics exports _Telemetric_ data in a uniform way of system and custom reso
 The class `RandomStringsController` contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
 
 ### Open API
-
 Exposes the information about your endpoints in the format of the OpenAPI v3 specification ([docs][5]).
 
 The index page contains a link to the OpenAPI information of the available endpoints for this project.
 
 ## Deploying the Application
-
-### Deploy to Google Cloud Run
-Make sure to have a file named _exactly_ Dockerfile in the root folder of the project. 
-This is the one Google Cloud Build will be using. 
-
-```shell script
-gcloud builds submit --tag gcr.io/{your project name}/randomstrings
-gcloud run deploy --image gcr.io/{your project name}/randomstrings --platform managed
-```
 
 ### Quarkus Native
 Build with `mvn verify -f pom_quarkus.xml -Pnative -Dquarkus.native.container-build=true`
