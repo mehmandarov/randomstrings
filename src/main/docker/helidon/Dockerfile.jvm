@@ -16,7 +16,7 @@ RUN mvn package -DskipTests
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
-FROM registry.access.redhat.com/ubi8/openjdk-21:1.18
+FROM registry.access.redhat.com/ubi8/openjdk-21:1.19
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
