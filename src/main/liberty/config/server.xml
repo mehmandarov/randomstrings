@@ -19,7 +19,7 @@
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
 
-    <webApplication contextRoot="/" location="${project.name}.war" />
+    <webApplication contextRoot="/" location="randomstrings.war" />
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
