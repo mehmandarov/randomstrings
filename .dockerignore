@@ -1,0 +1,12 @@
+*
+
+# Except maven files
+!mvnw
+!.mvn/*
+!pom*.xml
+
+# Except source files
+!src/*
+
+# Except cloudbuild.yaml
+!cloudbuild.yaml
