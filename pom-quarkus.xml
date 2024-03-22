@@ -17,7 +17,7 @@
         <!-- Versions -->
         <compiler-plugin.version>3.12.1</compiler-plugin.version>
         <surefire-plugin.version>3.2.3</surefire-plugin.version>
-        <quarkus.platform.version>3.8.1</quarkus.platform.version>
+        <quarkus.platform.version>3.9.0</quarkus.platform.version>
         <quarkus-microprofile.version>3.2.0</quarkus-microprofile.version>
     </properties>
     <dependencyManagement>

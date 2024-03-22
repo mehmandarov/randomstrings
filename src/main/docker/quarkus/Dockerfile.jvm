@@ -1,6 +1,6 @@
 # Step 1: Build the code using regular maven
 FROM maven:3.9.6-eclipse-temurin-21 as maven
-COPY pom_quarkus.xml /home/app/pom.xml
+COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
 COPY src /home/app/src
 RUN mvn package
