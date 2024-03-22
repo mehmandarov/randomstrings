@@ -7,7 +7,7 @@ RUN mvn package
 
 
 # Step 2: Get the app up and running
-FROM registry.access.redhat.com/ubi8/openjdk-21:1.18
+FROM registry.access.redhat.com/ubi8/openjdk-21:1.19
 
 ENV LANGUAGE='en_US:en'
 
