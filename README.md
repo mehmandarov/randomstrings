@@ -1,4 +1,5 @@
 # RandomStrings – Using Jakarta EE + MicroProfile
+A demo project built with Jakarta EE and MicroProfile – a service that returns random combination of an adjective and a noun as a JSON list.
 
 ## Local Build and Deploy: Building and Running the Application Locally
 
@@ -16,32 +17,35 @@ The code can be deployed to several runtimes. This is done to illustrate the swi
 ./mvnw -f pom-quarkus.xml quarkus:dev
 ```
 
+### Building and Running the Application Locally in a Container
+All containers are multistage build containers and can be found in a [folder structure][10] for each runtime and are marked with `jvm` and `native`, depending on flavour you want to build. The same containers are used to create images for the Cloud deployments as well.
+
 ## Cloud Build and Deploy: Building Container Images on GCP and Deploy to Cloud Run
 
 ### Create Artifact Registry Repository
 https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 
 ### Build Images
-```shell script
-# Quarkus - JVM
-gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="jvm"
-# Quarkus - Native
-gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="native"
-# Helidon - JVM
-gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"
-# Helidon - Native
-gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="native"
-# OpenLiberty - JVM
-gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR="jvm"
-```
 
-## Application Set-up and Links
+| Runtime               | Build & Deploy to Cloud Run                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------------|
+| **Quarkus – JVM**     | ```gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="jvm"```    |
+| **Quarkus – Native**  | ```gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="native"``` |
+| **OpenLiberty – JVM** | ```gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR="jvm"```    |
+| **Helidon – JVM**     | ```gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"```    |
+| **Helidon – Native**  | ```gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="native"``` |
+
+
+## Application Setup and Links
 ### Port Configuration
 Cloud Run uses port 8080 by default. All runtimes are configured to expose that port. These configurations are done in: 
 
-* **Quarkus**: defaults to 8080
-* **OpenLiberty**: set-up in [server.xml](src/main/liberty/config/server.xml)
-* **Helidon**: set-up in [microprofile-config.properties](src/main/resources/META-INF/microprofile-config.properties)
+| Runtime         | Port Config                                  |
+|-----------------|----------------------------------------------|
+| **Quarkus**     | defaults to 8080                             |
+| **OpenLiberty** | setup in [server.xml][8]                     |
+| **Helidon**     | setup in [microprofile-config.properties][9] |
+
 
 ### Config
 Configuration of your application parameters ([specification][2]).
@@ -63,18 +67,6 @@ Exposes the information about your endpoints in the format of the OpenAPI v3 spe
 
 The index page contains a link to the OpenAPI information of the available endpoints for this project.
 
-## Deploying the Application
-
-### Quarkus Native
-Build with `mvn verify -f pom_quarkus.xml -Pnative -Dquarkus.native.container-build=true`
-
-You need to have GraalVM installed to build locally.
-
-```shell script
-sudo xattr -r -d com.apple.quarantine /Library/Java/JavaVirtualMachines/<graalvm-version>
-```
-
-Ensure that your path or java_home includes GraalVM, as specified in the readme.
 
 ## Authors
 - [Rustam Mehmandarov][6]
@@ -88,3 +80,6 @@ Ensure that your path or java_home includes GraalVM, as specified in the readme.
 [5]: https://microprofile.io/project/eclipse/microprofile-open-api
 [6]: https://github.com/mehmandarov
 [7]: https://github.com/madsop
+[8]: src/main/liberty/config/server.xml
+[9]: src/main/resources/META-INF/microprofile-config.properties
+[10]: src/main/docker
