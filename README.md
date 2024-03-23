@@ -1,7 +1,8 @@
 # RandomStrings – Using Jakarta EE + MicroProfile
 A demo project built with Jakarta EE and MicroProfile – a service that returns random combination of an adjective and a noun as a JSON list.
 
-## Local Build and Deploy: Building and Running the Application Locally
+## Local Build and Run
+### Building and Running the Application Locally
 
 The code can be deployed to several runtimes. This is done to illustrate the switching runtimes with minor changes to the code and to observe the performance.
 
@@ -20,12 +21,12 @@ The code can be deployed to several runtimes. This is done to illustrate the swi
 ### Building and Running the Application Locally in a Container
 All containers are multistage build containers and can be found in a [folder structure][10] for each runtime and are marked with `jvm` and `native`, depending on flavour you want to build. The same containers are used to create images for the Cloud deployments as well.
 
-## Building Container Images and Deployment: Cloud Build and Cloud Run
+## Building Container Images and Cloud Deployment: Cloud Build and Cloud Run
 
 ### Create Artifact Registry Repository
 https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 
-### Build Images using Cloud Build and deploy to Cloud Run
+### Build images using Cloud Build, add to the registry and deploy to Cloud Run
 
 | Runtime               | Build & Deploy to Cloud Run                                                                     |
 |-----------------------|-------------------------------------------------------------------------------------------------|
