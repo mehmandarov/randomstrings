@@ -6,7 +6,7 @@ The code can be deployed to several runtimes. This is done to illustrate the swi
 
 | Runtime          | Build                                      | Run                                                | Address                       |
 |------------------|--------------------------------------------|----------------------------------------------------|-------------------------------|
-| **Open Liberty** | ```mvn -f pom-liberty.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:9080/api/rnd |
+| **Open Liberty** | ```mvn -f pom-liberty.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
 | **Quarkus**      | ```mvn -f pom-quarkus.xml clean package``` | ```java -jar target/quarkus-app/quarkus-run.jar``` | http://localhost:8080/api/rnd |
 | **Helidon**      | ```mvn -f pom-helidon.xml clean package``` | ```java -jar target/randomstrings.jar```           | http://localhost:8080/api/rnd |
 
@@ -25,8 +25,12 @@ https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 ```shell script
 # Quarkus - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="jvm"
+# Quarkus - Native
+gcloud builds submit --substitutions=_APP_RUNTIME="quarkus",_APP_RUNTIME_FLAVOUR="native"
 # Helidon - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"
+# Helidon - Native
+gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="native"
 # OpenLiberty - JVM
 gcloud builds submit --substitutions=_APP_RUNTIME="liberty",_APP_RUNTIME_FLAVOUR="jvm"
 ```
