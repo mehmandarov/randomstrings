@@ -20,12 +20,12 @@ The code can be deployed to several runtimes. This is done to illustrate the swi
 ### Building and Running the Application Locally in a Container
 All containers are multistage build containers and can be found in a [folder structure][10] for each runtime and are marked with `jvm` and `native`, depending on flavour you want to build. The same containers are used to create images for the Cloud deployments as well.
 
-## Cloud Build and Deploy: Building Container Images on GCP and Deploy to Cloud Run
+## Building Container Images and Deployment: Cloud Build and Cloud Run
 
 ### Create Artifact Registry Repository
 https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 
-### Build Images
+### Build Images using Cloud Build and deploy to Cloud Run
 
 | Runtime               | Build & Deploy to Cloud Run                                                                     |
 |-----------------------|-------------------------------------------------------------------------------------------------|
