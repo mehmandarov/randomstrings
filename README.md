@@ -54,9 +54,12 @@ Configuration of your application parameters ([specification][2]).
 The example class `RandomStringsSupplier` shows you how to configure and define default values for variables.
 
 ### Health
-The health status can be used to determine if the 'computing node' needs to be discarded/restarted or not ([specification][3]).
+The health status can be used to determine if the 'computing node' needs to be discarded/restarted or not ([specification][3]). These probes (liveness, readiness, startup) are available at separate URLs and can easily be integrated with the Cloud's health checks as they return [HTTP codes (and human-readable)][11] responses.
 
-The class `ServiceHealthCheck` contains an example of a custom check which can be integrated to health status checks of the instance.  The index page contains a link to the status data.
+The class [ServiceHealthCheck][12] contains an example of a custom check which can be integrated to health status checks of the instance.
+
+The [index page][13] contains a link to the status data.
+
 
 ### Metrics
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources ([specification][4]).
@@ -84,3 +87,6 @@ The index page contains a link to the OpenAPI information of the available endpo
 [8]: src/main/liberty/config/server.xml
 [9]: src/main/resources/META-INF/microprofile-config.properties
 [10]: src/main/docker
+[11]: https://github.com/eclipse/microprofile-health/blob/main/spec/src/main/asciidoc/protocol-wireformat.asciidoc#appendix-a-rest-interfaces-specifications
+[12]: src/main/java/com/mehmandarov/randomstrings/health/ServiceHealthCheck.java
+[13]: src/main/webapp/index.html
