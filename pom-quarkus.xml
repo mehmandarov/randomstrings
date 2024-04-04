@@ -15,10 +15,10 @@
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 
         <!-- Versions -->
-        <compiler-plugin.version>3.12.1</compiler-plugin.version>
-        <surefire-plugin.version>3.2.3</surefire-plugin.version>
-        <quarkus.platform.version>3.8.3</quarkus.platform.version>
-        <quarkus-microprofile.version>3.2.0</quarkus-microprofile.version>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <surefire-plugin.version>3.2.5</surefire-plugin.version>
+        <quarkus.platform.version>3.9.2</quarkus.platform.version>
+        <quarkus-microprofile.version>3.3.0</quarkus-microprofile.version>
     </properties>
     <dependencyManagement>
         <dependencies>
