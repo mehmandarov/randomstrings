@@ -89,4 +89,4 @@ The index page contains a link to the OpenAPI information of the available endpo
 [10]: src/main/docker
 [11]: https://github.com/eclipse/microprofile-health/blob/main/spec/src/main/asciidoc/protocol-wireformat.asciidoc#appendix-a-rest-interfaces-specifications
 [12]: src/main/java/com/mehmandarov/randomstrings/health/ServiceHealthCheck.java
-[13]: src/main/webapp/index.html
+[13]: src/main/resources/META-INF/resources/index.html
