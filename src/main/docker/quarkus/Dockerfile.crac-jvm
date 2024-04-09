@@ -5,7 +5,7 @@ WORKDIR /home/app
 COPY src /home/app/src
 RUN mvn package
 
-# Step 2: Create
+# Step 2: Create an image that can run CRaC, based on JDK distribution that supports CRaC.
 FROM ubuntu:23.10
 
 ARG CRAC_JDK_URL
@@ -22,6 +22,7 @@ RUN tar --extract --file $JAVA_HOME/openjdk.tar.gz --directory "$JAVA_HOME" --st
 
 RUN mkdir -p /opt/crac-files
 
+# Copy built artifacts from previous stage
 COPY --from=maven /home/app/target/quarkus-app/lib/ /opt/app/lib/
 COPY --from=maven /home/app/target/quarkus-app/*.jar /opt/app/
 COPY --from=maven /home/app/target/quarkus-app/app/ /opt/app/app/
