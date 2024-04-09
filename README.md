@@ -49,11 +49,13 @@ Cloud Run uses port 8080 by default. All runtimes are configured to expose that 
 
 
 ### Config
-Configuration of your application parameters ([specification][2]).
+Lets you provide configuration parameters for your application ([specification][2]).
 
 The example class `RandomStringsSupplier` shows you how to configure and define default values for variables.
 
 ### Health
+Available at: `<URL>/health`.
+
 The health status can be used to determine if the 'computing node' needs to be discarded/restarted or not ([specification][3]). These probes (liveness, readiness, startup) are available at separate URLs and can easily be integrated with the Cloud's health checks as they return [HTTP codes (and human-readable)][11] responses.
 
 The class [ServiceHealthCheck][12] contains an example of a custom check which can be integrated to health status checks of the instance.
@@ -62,17 +64,46 @@ The [index page][13] contains a link to the status data.
 
 
 ### Metrics
+Available at: `<URL>/metrics`.
+
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources ([specification][4]).
 
-The class `RandomStringsController` contains an example how you can measure the execution time of a request. The index page also contains a link to the metric page (with all metric info).
+The class `RandomStringsController` contains an example how you can measure the execution time of a request. The [index page][13] also contains a link to the metric page.
 
 ### Open API
+Available at: `<URL>/openapi`.
+
 Exposes the information about your endpoints in the format of the OpenAPI v3 specification ([docs][5]).
 
-The index page contains a link to the OpenAPI information of the available endpoints for this project.
+The [index page][13] contains a link to the OpenAPI information of the available endpoints for this project.
 
+### CRaC
 
-## Authors
+This is an example of how application using CRaC can be set-up. See shell scripts in [crac][14] folder for more details.
+
+```bash
+# 1. build the image
+cd src/scripts/crac; ./checkpoint.sh
+
+# 2. tag the image
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+echo   $PROJECT_ID
+
+docker tag randomstrings-crac:checkpoint europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
+
+# 3. push the image to GCR
+docker push europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
+
+# 4. deploy the image to Cloud Run
+gcloud run deploy randomstrings-quarkus-crac  \
+--image=europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac \
+--execution-environment=gen2  \
+--allow-unauthenticated \
+--region=europe-north1 \
+--args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+```
+
+## Contributors
 - [Rustam Mehmandarov][6]
 - [Mads Opheim][7]
 
@@ -90,3 +121,4 @@ The index page contains a link to the OpenAPI information of the available endpo
 [11]: https://github.com/eclipse/microprofile-health/blob/main/spec/src/main/asciidoc/protocol-wireformat.asciidoc#appendix-a-rest-interfaces-specifications
 [12]: src/main/java/com/mehmandarov/randomstrings/health/ServiceHealthCheck.java
 [13]: src/main/resources/META-INF/resources/index.html
+[14]: src/scripts/crac
