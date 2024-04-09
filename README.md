@@ -26,7 +26,8 @@ All containers are multistage build containers and can be found in a [folder str
 ### Create Artifact Registry Repository
 https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
 
-### Build images using Cloud Build, add to the registry and deploy to Cloud Run
+### Build, Add, Deploy 
+Build images using Cloud Build, add to the registry and deploy to Cloud Run
 
 | Runtime               | Build & Deploy to Cloud Run                                                                     |
 |-----------------------|-------------------------------------------------------------------------------------------------|
