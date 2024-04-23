@@ -2,8 +2,10 @@
 FROM maven:3.9.6-eclipse-temurin-21 as maven
 COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
+RUN mvn verify -B --fail-never
 COPY src /home/app/src
 RUN mvn package
+
 
 
 # Step 2: Get the app up and running

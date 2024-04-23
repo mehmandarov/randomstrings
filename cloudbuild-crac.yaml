@@ -1,0 +1,53 @@
+substitutions:
+  _APP_RUNTIME: quarkus     # default value
+  _APP_RUNTIME_FLAVOUR: crac # default value
+  _LOCATION: europe-north1  # default value
+steps:
+  # Build using a specific Dockerfile at a custom path
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: 'src/scripts/crac'
+    script: './checkpoint.sh'
+
+  # Build using a specific Dockerfile at a custom path
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'tag'
+      - 'randomstrings-quarkus-crac:checkpoint'
+      - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}'
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}'
+
+  # Deploy the container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}'
+      - '--image'
+      - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}:latest'
+      - '--region'
+      - '${_LOCATION}'
+      - '--platform'
+      - 'managed'
+      - '--min-instances'
+      - '0'
+      - '--max-instances'
+      - '1'
+      - '--execution-environment'
+      - 'gen2'
+      - '--args'
+      - "--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP --cap-add SYS_RESOURCE -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+      - '--allow-unauthenticated'
+images: ['${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}']
+
+# SUBSTITUTION - example:
+# ** Can also be:
+# --tag=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}
+# ** And run with:
+# gcloud builds submit --config=cloudbuild.yaml \
+#  --substitutions=_LOCATION="us-east1",_REPOSITORY="my-repo",_IMAGE="my-image"

@@ -2,23 +2,14 @@
 FROM maven:3.9.6-eclipse-temurin-21 as maven
 COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
+RUN mvn verify -B --fail-never
 COPY src /home/app/src
 RUN mvn package
 
 # Step 2: Create an image that can run CRaC, based on JDK distribution that supports CRaC.
-FROM ubuntu:23.10
+FROM azul/zulu-openjdk:21-jdk-crac-latest
 
-ARG CRAC_JDK_URL
-
-ENV JAVA_HOME /opt/jdk
-ENV PATH $JAVA_HOME/bin:$PATH
-ENV LANGUAGE='en_US:en'
 ENV CRAC_FILES_DIR /opt/crac-files
-
-RUN apt-get update -y
-
-ADD $CRAC_JDK_URL $JAVA_HOME/openjdk.tar.gz
-RUN tar --extract --file $JAVA_HOME/openjdk.tar.gz --directory "$JAVA_HOME" --strip-components 1; rm $JAVA_HOME/openjdk.tar.gz;
 
 RUN mkdir -p /opt/crac-files
 
@@ -30,3 +21,5 @@ COPY --from=maven /home/app/target/quarkus-app/quarkus/ /opt/app/quarkus/
 
 COPY src/scripts/crac/entrypoint.sh /opt/app/entrypoint.sh
 RUN chmod 755 /opt/app/entrypoint.sh
+
+ENTRYPOINT [ "/opt/app/entrypoint.sh" ]
