@@ -12,12 +12,11 @@
     <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <openliberty.maven.version>3.10.2</openliberty.maven.version>
+    <openliberty.maven.version>3.11.1</openliberty.maven.version>
     <jakartaee-api.maven.version>10.0.0</jakartaee-api.maven.version>
     <microprofile.maven.version>6.1</microprofile.maven.version>
     <maven-war-plugin.maven.version>3.4.0</maven-war-plugin.maven.version>
-    <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
-    <liberty-maven-plugin.version>24.0.0.3</liberty-maven-plugin.version>
+    <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
   </properties>
   <dependencies>
     <dependency>
