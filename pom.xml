@@ -16,9 +16,9 @@
 
     <!-- Versions -->
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
-    <surefire-plugin.version>3.2.5</surefire-plugin.version>
-    <quarkus.platform.version>3.15.1</quarkus.platform.version>
-    <quarkus-microprofile.version>3.3.0</quarkus-microprofile.version>
+    <surefire-plugin.version>3.5.2</surefire-plugin.version>
+    <quarkus.platform.version>3.18.1</quarkus.platform.version>
+    <quarkus-microprofile.version>3.4.0</quarkus-microprofile.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -32,11 +32,6 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <dependency>
-      <groupId>org.crac</groupId>
-      <artifactId>crac</artifactId>
-      <version>1.5.0</version>
-    </dependency>
     <dependency>
       <groupId>io.quarkiverse.microprofile</groupId>
       <artifactId>quarkus-microprofile</artifactId>

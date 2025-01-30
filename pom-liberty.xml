@@ -12,7 +12,8 @@
     <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <openliberty.maven.version>3.11.1</openliberty.maven.version>
+    <openliberty.version>25.0.0.1</openliberty.version>
+    <openliberty.maven.version>3.11.2</openliberty.maven.version>
     <jakartaee-api.maven.version>10.0.0</jakartaee-api.maven.version>
     <microprofile.maven.version>6.1</microprofile.maven.version>
     <maven-war-plugin.maven.version>3.4.0</maven-war-plugin.maven.version>
@@ -82,7 +83,7 @@
               <runtimeArtifact>
                 <groupId>io.openliberty</groupId>
                 <artifactId>openliberty-runtime</artifactId>
-                <version>${liberty-maven-plugin.version}</version>
+                <version>${openliberty.version}</version>
                 <type>zip</type>
               </runtimeArtifact>
             </configuration>
