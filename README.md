@@ -23,11 +23,37 @@ All containers are multistage build containers and can be found in a [folder str
 
 ## Building Container Images and Cloud Deployment: Cloud Build and Cloud Run
 
-### Create Artifact Registry Repository
-https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
+### Preparations
+
+#### 1. Activate necessary APIs for your Google Cloud project
+
+APIs to enable: `Cloud Build`, `Artifact Registry`, `Cloud Run`.
+
+```bash
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable artifactregistry.googleapis.com
+gcloud services enable run.googleapis.com
+```
+
+#### 2. Create Artifact Registry Repository
+
+Values that will be used later in the scripts:
+* Repository name: `rndstrs`
+* Region: `europe-north1`
+
+```bash
+gcloud artifacts repositories create rndstrs \
+--repository-format=docker \
+--location=europe-north1 \
+--description="Randomstrings Workshop Artifact Repository" \
+--disable-vulnerability-scanning
+```
+More info https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker
+
 
 ### Build, Add, Deploy 
-Build images using Cloud Build, add to the registry and deploy to Cloud Run
+
+Build images using Cloud Build, add to the registry, and deploy to Cloud Run.
 
 | Runtime               | Build & Deploy to Cloud Run                                                                     |
 |-----------------------|-------------------------------------------------------------------------------------------------|
@@ -37,6 +63,24 @@ Build images using Cloud Build, add to the registry and deploy to Cloud Run
 | **Helidon – JVM**     | ```gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="jvm"```    |
 | **Helidon – Native**  | ```gcloud builds submit --substitutions=_APP_RUNTIME="helidon",_APP_RUNTIME_FLAVOUR="native"``` |
 
+You can see all deployed services using:
+
+```bash
+gcloud run services list
+```
+
+_**NOTE:** The default setup is to require authentication for the deployed applications.
+You can turn off authentication for the applications by adding `--allow-unauthenticated` in
+`gcloud run deploy` command in `cloudbild.yaml`, or use this command to modify the permissions
+after the deploy:_
+
+```bash
+# You might be asked to choose a region when running this command.
+# Use the same region as the one you used for the deployment, here it is: europe-north1
+gcloud run services add-iam-policy-binding [SERVICE_NAME] \
+    --member="allUsers" \
+    --role="roles/run.invoker"
+```
 
 ## Application Setup and Links
 ### Port Configuration
