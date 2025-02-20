@@ -1,5 +1,5 @@
 # Step 1: Build the code using regular maven
-FROM maven:3.9.6-eclipse-temurin-21 as maven
+FROM maven:3.9.9-eclipse-temurin-21 as maven
 COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
 RUN mvn verify -B --fail-never
