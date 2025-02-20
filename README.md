@@ -21,6 +21,19 @@ The code can be deployed to several runtimes. This is done to illustrate the swi
 ### Building and Running the Application Locally in a Container
 All containers are multistage build containers and can be found in a [folder structure][10] for each runtime and are marked with `jvm` and `native`, depending on flavour you want to build. The same containers are used to create images for the Cloud deployments as well.
 
+An example of building and running using `docker`:
+
+```shell script
+# BUILD container
+docker build -t randomstrings-quarkus:regular -f src/main/docker/quarkus/Dockerfile.jvm .
+
+# RUN container
+docker run -d --privileged --rm -i --name=randomstrings-quarkus -p 8080:8080 randomstrings-quarkus:regular
+
+# DELETE container
+docker rm -f randomstrings-quarkus   
+```
+
 ## Building Container Images and Cloud Deployment: Cloud Build and Cloud Run
 
 ### Preparations
