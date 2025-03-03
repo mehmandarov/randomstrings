@@ -1,5 +1,5 @@
 # Step 1: Build the code using regular maven
-FROM maven:3.9.9-eclipse-temurin-21 as maven
+FROM maven:3.9.9-eclipse-temurin-21 AS maven
 COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
 RUN mvn verify -B --fail-never
@@ -9,7 +9,7 @@ RUN mvn package
 # Step 2: Create an image that can run CRaC, based on JDK distribution that supports CRaC.
 FROM azul/zulu-openjdk:21-jdk-crac-latest
 
-ENV CRAC_FILES_DIR /opt/crac-files
+ENV CRAC_FILES_DIR=/opt/crac-files
 
 RUN mkdir -p /opt/crac-files
 
