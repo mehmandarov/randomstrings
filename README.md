@@ -141,7 +141,7 @@ This is an example of how application using CRaC can be set-up. See shell script
 
 ```bash
 # 1. build the image
-cd src/scripts/crac; ./checkpoint.sh
+./src/scripts/crac/checkpoint.sh
 
 # 2. tag the image
 export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
