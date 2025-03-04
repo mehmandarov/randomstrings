@@ -1,7 +1,11 @@
 package com.mehmandarov.randomstrings;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import org.crac.Context;
+import org.crac.Core;
+import org.crac.Resource;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.*;
@@ -13,7 +17,11 @@ import java.util.stream.Collectors;
 
 
 @ApplicationScoped
-public class RandomStringsSupplier {
+public class RandomStringsSupplier implements Resource {
+
+    RandomStringsSupplier(){
+        Core.getGlobalContext().register(RandomStringsSupplier.this);
+    }
 
     @Inject
     @ConfigProperty(name = "adjectivesFileName", defaultValue = "/adjectives.txt")
@@ -50,8 +58,6 @@ public class RandomStringsSupplier {
                 result.add(line);
             }
 
-        } catch (FileNotFoundException e) {
-            result.add(e.getMessage());
         } catch (IOException e) {
             result.add(e.getMessage());
         }
@@ -63,4 +69,19 @@ public class RandomStringsSupplier {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
+
+    @Override
+    public void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
+        System.out.println("*** Random Strings Supplier before checkpoint: Closing File Handles");
+    }
+
+    @Override
+    public void afterRestore(Context<? extends Resource> context) throws Exception {
+        System.out.println("*** Random Strings Supplier after restore: Re-creating File Handles");
+    }
+
+    // Forces eager initialization on application startup.
+    // Needed for the constructor to be run at startup, which is needed for initializing CRaC related things in this file.
+    public void onStartup(@Observes Object event) {}
+
 }
