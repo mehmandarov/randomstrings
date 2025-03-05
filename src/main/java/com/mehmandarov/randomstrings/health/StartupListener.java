@@ -7,6 +7,7 @@ import jakarta.enterprise.event.Observes;
 import org.crac.Context;
 import org.crac.Core;
 import org.crac.Resource;
+import java.time.Instant;
 
 @ApplicationScoped
 public class StartupListener implements Resource {
@@ -21,8 +22,8 @@ public class StartupListener implements Resource {
         String timestamp = System.getenv("START_COMMAND_TIMESTAMP_MS");
         if (timestamp != null) {
             long started = Long.parseLong(timestamp);
-            long elapsed = System.currentTimeMillis() - started;
-            System.out.println("<======> STARTUP: Elapsed time: " + elapsed);
+            double elapsed = Instant.now().toEpochMilli() - started;
+            System.out.println("<======> STARTUP: Elapsed time (s): " + elapsed/1_000);
         }
     }
 
@@ -43,8 +44,8 @@ public class StartupListener implements Resource {
         String timestamp = System.getenv("START_COMMAND_TIMESTAMP_MS");
         if (timestamp != null) {
             long started = Long.parseLong(timestamp);
-            long elapsed = System.currentTimeMillis() - started;
-            System.out.println("<======> RESTORE: Elapsed time: " + elapsed);
+            double elapsed = Instant.now().toEpochMilli() - started;
+            System.out.println("<======> RESTORE: Elapsed time (s): " + elapsed/1_000);
         }
     }
 }

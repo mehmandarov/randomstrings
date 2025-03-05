@@ -24,11 +24,10 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
+docker build -t randomstrings-${RUNTIME}:regular -f src/main/docker/${RUNTIME}/Dockerfile.jvm .
+
+echo "=> Starting WITHOUT a restore: New container. Who dis?"
 # Get the current timestamp in milliseconds
 START_COMMAND_TIMESTAMP_MS=$(($(date +'%s * 1000 + %-N / 1000000')))
-
-echo "=> Restoring from Checkpoint: New container. Who dis?"
-
-docker run --privileged --cap-add CHECKPOINT_RESTORE --cap-add SETPCAP --cap-add SYS_RESOURCE --rm -p 8080:8080 \
-  -v "$(pwd)"/crac-files:/opt/crac-files --name randomstrings-${RUNTIME}-crac \
-  -e START_COMMAND_TIMESTAMP_MS=${START_COMMAND_TIMESTAMP_MS} randomstrings-${RUNTIME}-crac:checkpoint
+docker run --rm -p 8080:8080 --name randomstrings-${RUNTIME}-crac \
+  -e START_COMMAND_TIMESTAMP_MS=${START_COMMAND_TIMESTAMP_MS} randomstrings-${RUNTIME}:regular

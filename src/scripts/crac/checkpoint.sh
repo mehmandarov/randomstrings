@@ -25,7 +25,8 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # Get the current timestamp in milliseconds (workaround using python...)
-START_COMMAND_TIMESTAMP_MS=$(python3 -c "from time import time; print(int(round(time()*1000)))")
+START_COMMAND_TIMESTAMP_MS=$(($(date +'%s * 1000 + %-N / 1000000')))
+
 
 echo "=> Using CRaC enabled JDK with runtime: $RUNTIME."
 
