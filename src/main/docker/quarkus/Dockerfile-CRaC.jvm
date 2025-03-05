@@ -19,7 +19,7 @@ COPY --from=maven /home/app/target/quarkus-app/*.jar /opt/app/
 COPY --from=maven /home/app/target/quarkus-app/app/ /opt/app/app/
 COPY --from=maven /home/app/target/quarkus-app/quarkus/ /opt/app/quarkus/
 
-COPY src/scripts/crac/entrypoint.sh /opt/app/entrypoint.sh
+COPY src/scripts/crac/entrypoint-quarkus.sh /opt/app/entrypoint.sh
 RUN chmod 755 /opt/app/entrypoint.sh
 
 ENTRYPOINT [ "/opt/app/entrypoint.sh" ]

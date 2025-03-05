@@ -1,0 +1,34 @@
+# 1st stage, build the app
+FROM maven:3.9.9-eclipse-temurin-21 AS maven
+WORKDIR /helidon
+
+# Create a first layer to cache the "Maven World" in the local repository.
+# Incremental docker builds will always resume after that, unless you update
+# the pom
+ADD pom-helidon.xml pom.xml
+RUN mvn package -Dmaven.test.skip -Declipselink.weave.skip -Declipselink.weave.skip -DskipOpenApiGenerate
+
+# Do the Maven build!
+# Incremental docker builds will resume here when you change sources
+ADD src src
+RUN mvn package -DskipTests
+
+RUN echo "done!"
+
+# 2nd stage, build the runtime image
+FROM azul/zulu-openjdk:21-jdk-crac-latest
+
+ENV CRAC_FILES_DIR=/opt/crac-files
+
+RUN mkdir -p /opt/crac-files
+
+# Copy the binary built in the 1st stage
+COPY --from=maven /helidon/target/randomstrings.jar ./
+COPY --from=maven /helidon/target/libs ./libs
+
+COPY src/scripts/crac/entrypoint-helidon.sh /opt/app/entrypoint.sh
+RUN chmod 755 /opt/app/entrypoint.sh
+
+ENTRYPOINT [ "/opt/app/entrypoint.sh" ]
+
+EXPOSE 8080
