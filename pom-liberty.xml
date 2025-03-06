@@ -18,6 +18,7 @@
     <microprofile.maven.version>6.1</microprofile.maven.version>
     <maven-war-plugin.maven.version>3.4.0</maven-war-plugin.maven.version>
     <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+    <crac.version>1.5.0</crac.version>
   </properties>
   <dependencies>
     <dependency>
@@ -32,6 +33,11 @@
       <version>${microprofile.maven.version}</version>
       <type>pom</type>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.crac</groupId>
+      <artifactId>crac</artifactId>
+      <version>${crac.version}</version>
     </dependency>
   </dependencies>
 
