@@ -36,6 +36,9 @@ docker rm -f randomstrings-quarkus
 
 ## Building Container Images and Cloud Deployment: Cloud Build and Cloud Run
 
+<details>
+<summary> Expand for more details. Full info on how to build, deploy, and run the app on Google Cloud. </summary>
+
 ### Preparations
 
 #### 1. Activate necessary APIs for your Google Cloud project
@@ -95,6 +98,33 @@ gcloud run services add-iam-policy-binding [SERVICE_NAME] \
     --role="roles/run.invoker"
 ```
 
+### Creating a CRaC Enabled Application
+
+This is an example of how application using CRaC can be set-up. See shell scripts in [crac][14] folder for more details.
+
+```bash
+# 1. build the image
+./src/scripts/crac/checkpoint.sh
+
+# 2. tag the image
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+echo   $PROJECT_ID
+
+docker tag randomstrings-crac:checkpoint europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
+
+# 3. push the image to GCR
+docker push europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
+
+# 4. deploy the image to Cloud Run
+gcloud run deploy randomstrings-quarkus-crac  \
+--image=europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac \
+--execution-environment=gen2  \
+--allow-unauthenticated \
+--region=europe-north1 \
+--args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+```
+</details>
+
 ## Application Setup and Links
 ### Port Configuration
 Cloud Run uses port 8080 by default. All runtimes are configured to expose that port. These configurations are done in: 
@@ -126,7 +156,8 @@ Available at: `<URL>/metrics`.
 
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources ([specification][4]).
 
-The class `RandomStringsController` contains an example how you can measure the execution time of a request. The [index page][13] also contains a link to the metric page.
+The class `RandomStringsController` contains an example how you can measure the execution time of a request. 
+The [index page][13] also contains a link to the metric page.
 
 ### Open API
 Available at: `<URL>/openapi`.
@@ -137,29 +168,13 @@ The [index page][13] contains a link to the OpenAPI information of the available
 
 ### CRaC
 
-This is an example of how application using CRaC can be set-up. See shell scripts in [crac][14] folder for more details.
+This is how an application using CRaC can be set-up. See helper shell scripts in [crac][14] folder 
+for more details.
 
-```bash
-# 1. build the image
-./src/scripts/crac/checkpoint.sh
+* `checkpoint.sh` – a script for building the container image with a checkpoint for a CRaC enabled application.
+* `restore.sh` – a script for starting the application by restoring it from the snapshot
+* `start-up-no-crac.sh` – a script for starting the application containers without CRaC, can be used to have a base for the benchmarks.
 
-# 2. tag the image
-export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
-echo   $PROJECT_ID
-
-docker tag randomstrings-crac:checkpoint europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
-
-# 3. push the image to GCR
-docker push europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac
-
-# 4. deploy the image to Cloud Run
-gcloud run deploy randomstrings-quarkus-crac  \
---image=europe-north1-docker.pkg.dev/${PROJECT_ID}/rndstrs/randomstrings-crac \
---execution-environment=gen2  \
---allow-unauthenticated \
---region=europe-north1 \
---args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
-```
 
 ## Contributors
 - [Rustam Mehmandarov][6]
