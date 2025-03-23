@@ -2,8 +2,9 @@
 <server description="${project.name}">
 
     <featureManager>
-        <feature>jakartaee-10.0</feature>
+        <feature>webProfile-10.0</feature>
         <feature>microProfile-6.1</feature>
+        <feature>crac-1.4</feature>
     </featureManager>
 
     <basicRegistry id="basic" realm="BasicRealm">
@@ -18,6 +19,8 @@
 
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
+
+    <!-- <logging traceSpecification="*=info:com.ibm.ws.app.manager.*=all:com.ibm.ws.threading.internal.*=all" /> -->
 
     <webApplication contextRoot="/" location="randomstrings.war" />
 

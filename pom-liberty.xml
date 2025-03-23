@@ -88,7 +88,7 @@
               </bootstrapProperties>
               <runtimeArtifact>
                 <groupId>io.openliberty</groupId>
-                <artifactId>openliberty-runtime</artifactId>
+                <artifactId>openliberty-webProfile10</artifactId>
                 <version>${openliberty.version}</version>
                 <type>zip</type>
               </runtimeArtifact>
