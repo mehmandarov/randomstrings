@@ -15,7 +15,7 @@ if [ -z "$(ls -A "$CRAC_FILES_DIR")" ]; then
   sleep infinity
 else
   echo "=> Hello from the container >> CHECKPOINT: Restoring from checkpoint."
-  java -XX:CRaCEngine=warp -XX:CRaCRestoreFrom="$CRAC_FILES_DIR" -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures&
+  java -XX:CRaCEngine=warp -XX:CRaCRestoreFrom="$CRAC_FILES_DIR" -XX:+UnlockExperimentalVMOptions&
   PID=$!
   trap 'kill "$PID"' SIGINT SIGTERM
   wait $PID

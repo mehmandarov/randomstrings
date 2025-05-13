@@ -17,5 +17,5 @@ gcloud run deploy randomstrings-quarkus-crac  \
 --execution-environment=gen2  \
 --allow-unauthenticated \
 --region=europe-north1 \
---args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+--args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions"
 

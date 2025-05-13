@@ -121,7 +121,7 @@ gcloud run deploy randomstrings-quarkus-crac  \
 --execution-environment=gen2  \
 --allow-unauthenticated \
 --region=europe-north1 \
---args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+--args="--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP -XX:+UnlockExperimentalVMOptions"
 ```
 </details>
 
@@ -174,6 +174,16 @@ for more details.
 * `checkpoint.sh` – a script for building the container image with a checkpoint for a CRaC enabled application.
 * `restore.sh` – a script for starting the application by restoring it from the snapshot
 * `start-up-no-crac.sh` – a script for starting the application containers without CRaC, can be used to have a base for the benchmarks.
+
+Run scripts from the root folder of this project, e.g.:
+
+```bash
+./src/scripts/crac/checkpoint.sh
+
+./src/scripts/crac/restore.sh
+
+./src/scripts/crac/start-up-no-crac.sh
+```
 
 
 ## Contributors

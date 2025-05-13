@@ -41,7 +41,7 @@ steps:
       - '--execution-environment'
       - 'gen2'
       - '--args'
-      - "--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP --cap-add SYS_RESOURCE -XX:+UnlockExperimentalVMOptions -XX:+IgnoreCPUFeatures"
+      - "--cap-add CHECKPOINT_RESTORE --cap-add SETPCAP --cap-add SYS_RESOURCE -XX:+UnlockExperimentalVMOptions"
       - '--allow-unauthenticated'
 images: ['${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}']
 
