@@ -29,5 +29,5 @@ docker build -t randomstrings-${RUNTIME}:regular -f src/main/docker/${RUNTIME}/D
 echo "=> Starting WITHOUT a restore: New container. Who dis?"
 # Get the current timestamp in milliseconds
 START_COMMAND_TIMESTAMP_MS=$(($(date +'%s * 1000 + %-N / 1000000')))
-docker run --rm -p 8080:8080 --name randomstrings-${RUNTIME}-crac \
+docker run --rm -p 8080:8080 --name randomstrings-${RUNTIME}-nocrac \
   -e START_COMMAND_TIMESTAMP_MS=${START_COMMAND_TIMESTAMP_MS} randomstrings-${RUNTIME}:regular
