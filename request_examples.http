@@ -8,7 +8,7 @@ Accept: application/json
 GET http://localhost:8080/api/rnd/v2/
 Accept: application/json
 
-### Call using path versioning
+### Call using custom header versioning
 # curl -X GET http://localhost:8080/api/rnd/
 #  -H "Accept: application/json"
 #  -H "Accept-Version: 2"
