@@ -1,0 +1,35 @@
+### Regular Call
+GET http://localhost:8080/api/rnd/
+Accept: application/json
+
+### Call using path versioning
+# curl -X GET http://localhost:8080/api/rnd/v2/
+#  -H "Accept: application/json"
+GET http://localhost:8080/api/rnd/v2/
+Accept: application/json
+
+### Call using path versioning
+# curl -X GET http://localhost:8080/api/rnd/
+#  -H "Accept: application/json"
+#  -H "Accept-Version: 2"
+GET http://localhost:8080/api/rnd/
+Accept: application/json
+Accept-Version: 2
+
+### Call using Media Type-based versioning: v3
+# curl -X GET http://localhost:8080/api/rnd/
+#  -H "Accept: application/rnd.v3+json"
+GET http://localhost:8080/api/rnd/
+Accept: application/rnd.v3+json
+
+### Call using Media Type-based versioning: v4
+# curl -X GET http://localhost:8080/api/rnd/
+#  -H "Accept: application/rnd.v4+json"
+GET http://localhost:8080/api/rnd/
+Accept: application/rnd.v4+json
+
+### Call using Media Type-based versioning: v5
+# curl -X GET http://localhost:8080/api/rnd/
+#  -H "Accept: application/rnd.v5+json"
+GET http://localhost:8080/api/rnd/
+Accept: application/rnd.v5+json
