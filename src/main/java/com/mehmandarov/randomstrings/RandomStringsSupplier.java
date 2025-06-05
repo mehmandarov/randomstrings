@@ -39,7 +39,7 @@ public class RandomStringsSupplier implements Resource {
         List<String> adjectives = readFromFile ? readFile(adjectivesFileName) : readFromEnum(Adjectives.values());
         List<String> nouns = readFromFile ? readFile(nounsFileName) : readFromEnum(Nouns.values());
 
-        return  new String[] {getRandomElement(adjectives), getRandomElement(nouns)};
+        return new String[] {getRandomElement(adjectives), getRandomElement(nouns)};
     }
 
     private List<String> readFromEnum(Enum<?>[] values) {

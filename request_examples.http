@@ -8,11 +8,23 @@ Accept: application/json
 GET http://localhost:8080/api/rnd/v2/
 Accept: application/json
 
+### Call deprecated endpoint, using path versioning
+# curl -X GET http://localhost:8080/api/rnd/v0.1/
+#  -H "Accept: application/json"
+GET http://localhost:8080/api/rnd/v0.1/
+Accept: application/json
+
 ### Call using custom header versioning
-# curl -X GET http://localhost:8080/api/rnd/
+## -------
+## Note: This is for demo purposes only.
+## It has to have different URL than the regular API
+## Otherwise, it will also intercept calls what do not
+## contain Accept-Version header.
+## --------
+# curl -X GET http://localhost:8080/api/rnd/versioned/
 #  -H "Accept: application/json"
 #  -H "Accept-Version: 2"
-GET http://localhost:8080/api/rnd/
+GET http://localhost:8080/api/rnd/versioned/
 Accept: application/json
 Accept-Version: 2
 
