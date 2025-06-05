@@ -1,5 +1,6 @@
-package com.mehmandarov.randomstrings;
+package com.mehmandarov.randomstrings.apidemo;
 
+import com.mehmandarov.randomstrings.RandomStringsSupplier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -26,7 +27,11 @@ public class RandomStringsAPIDemoController {
     @Inject
     RandomStringsSupplier rndStrSup;
 
-    // <<<<< The code below is a DEMO for API versioning only >>>>>
+    // <<<<< The code below is intended to serve as a DEMO for various API versioning strategies ONLY. >>>>>
+
+    /**
+    * A demo of the path versioning approach of the API.
+    */
     @GET
     @Path("v2/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,10 +47,14 @@ public class RandomStringsAPIDemoController {
                 .build();
     }
 
+    /**
+     * A demo of an API end-point deprecation.
+     */
     @GET
     @Path("v0.1/")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "DEPRECATED. Use v2 now. Returns the adjective-noun pair",
+    @Operation(deprecated = true,
+            summary = "DEPRECATED. Use v2 now. Returns the adjective-noun pair",
             description = "Deprecated function. The pair of one random adjective and one random noun is returned as an array.")
     @Counted(name = "totalCountToRandomPairCalls_Versioned_Path_DEPRECATED",
             absolute = true,
@@ -61,6 +70,9 @@ public class RandomStringsAPIDemoController {
                 .build();
     }
 
+    /**
+     * A demo of header based versioning of the API end-points.
+     */
     @GET
     @Path("/versioned")
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,6 +92,9 @@ public class RandomStringsAPIDemoController {
                 .build();
     }
 
+    /**
+     * A demo of media type based versioning of the API end-points using multiple versions.
+     */
     @GET
     @Produces({"application/rnd.v3+json", "application/rnd.v4+json"})
     @Operation(summary = "Returns the adjective-noun pair using *media type versioning*",
@@ -94,6 +109,9 @@ public class RandomStringsAPIDemoController {
                 .build();
     }
 
+    /**
+     * A demo of media type based versioning of the API end-points.
+     */
     @GET
     @Produces({"application/rnd.v5+json"})
     @Operation(summary = "Returns the adjective-noun pair using *media type versioning*",
