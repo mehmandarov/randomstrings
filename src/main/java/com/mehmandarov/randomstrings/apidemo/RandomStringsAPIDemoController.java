@@ -18,7 +18,7 @@ import java.net.URI;
 
 
 /**
- * Endpoints for generating random pairs using various methods.
+ * NOTE: The code below is intended to serve as a DEMO for various API versioning strategies ONLY.
  */
 @Path("/rnd")
 @ApplicationScoped
@@ -26,8 +26,6 @@ public class RandomStringsAPIDemoController {
 
     @Inject
     RandomStringsSupplier rndStrSup;
-
-    // <<<<< The code below is intended to serve as a DEMO for various API versioning strategies ONLY. >>>>>
 
     /**
     * A demo of the path versioning approach of the API.
@@ -53,9 +51,9 @@ public class RandomStringsAPIDemoController {
     @GET
     @Path("v0.1/")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(deprecated = true,
-            summary = "DEPRECATED. Use v2 now. Returns the adjective-noun pair",
-            description = "Deprecated function. The pair of one random adjective and one random noun is returned as an array.")
+    @Operation(summary = "DEPRECATED: Please upgrade to version 2. Returns a random adjective-noun pair as an array.",
+            description = "Deprecated function. The pair of one random adjective and one random noun is returned as an array.",
+            deprecated = true)
     @Counted(name = "totalCountToRandomPairCalls_Versioned_Path_DEPRECATED",
             absolute = true,
             description = "Deprecated function call: Total number of calls to random string pairs.",
@@ -71,12 +69,12 @@ public class RandomStringsAPIDemoController {
     }
 
     /**
-     * A demo of header based versioning of the API end-points.
+     * A demo of the header based versioning of the API end-points.
      */
     @GET
     @Path("/versioned")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Returns the adjective-noun pair using *header versioning*",
+    @Operation(summary = "Returns a random adjective-noun pair using *header versioning*",
             description = "The pair of one random adjective and one random noun is returned as an array.")
     @Counted(name = "totalCountToRandomPairCalls_Versioned_RequestHeader",
             absolute = true,
@@ -93,11 +91,11 @@ public class RandomStringsAPIDemoController {
     }
 
     /**
-     * A demo of media type based versioning of the API end-points using multiple versions.
+     * A demo of the media type based versioning of the API end-points using multiple versions.
      */
     @GET
     @Produces({"application/rnd.v3+json", "application/rnd.v4+json"})
-    @Operation(summary = "Returns the adjective-noun pair using *media type versioning*",
+    @Operation(summary = "Returns a random adjective-noun pair using *media type versioning*",
             description = "The pair of one random adjective and one random noun is returned as an array.")
     @Counted(name = "totalCountToRandomPairCalls_Versioned_MediaType_V3V4",
             absolute = true,
@@ -110,11 +108,11 @@ public class RandomStringsAPIDemoController {
     }
 
     /**
-     * A demo of media type based versioning of the API end-points.
+     * A demo of the media type based versioning of the API end-points.
      */
     @GET
     @Produces({"application/rnd.v5+json"})
-    @Operation(summary = "Returns the adjective-noun pair using *media type versioning*",
+    @Operation(summary = "Returns a random adjective-noun pair using *media type versioning*",
             description = "The pair of one random adjective and one random noun is returned as an array.")
     @Counted(name = "totalCountToRandomPairCalls_Versioned_MediaType_V5",
             absolute = true,
