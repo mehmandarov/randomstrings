@@ -3,16 +3,18 @@ substitutions:
   _APP_RUNTIME_FLAVOUR: jvm # default value
   _LOCATION: europe-north1  # default value
 steps:
-  # Build using a specific Dockerfile at a custom path
+  # 1. Build using a specific Dockerfile at a custom path
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - build
       - "--tag=${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}"
       - "--file=./src/main/docker/${_APP_RUNTIME}/Dockerfile.${_APP_RUNTIME_FLAVOUR}"
       - .
-  # Push the container image to Artifact Registry
+  # 2. Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'push', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}' ]
+
+  # 3. Deploy the container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
