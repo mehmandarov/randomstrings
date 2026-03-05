@@ -15,10 +15,10 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 
     <!-- Versions -->
-    <compiler-plugin.version>3.13.0</compiler-plugin.version>
-    <surefire-plugin.version>3.5.2</surefire-plugin.version>
-    <quarkus.platform.version>3.18.1</quarkus.platform.version>
-    <quarkus-microprofile.version>3.4.0</quarkus-microprofile.version>
+    <compiler-plugin.version>3.15.0</compiler-plugin.version>
+    <surefire-plugin.version>3.5.5</surefire-plugin.version>
+    <quarkus.platform.version>3.32.1</quarkus.platform.version>
+    <quarkus-microprofile.version>3.4.1</quarkus-microprofile.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -44,9 +44,14 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-junit5</artifactId>
+      <artifactId>quarkus-junit</artifactId>
       <version>${quarkus.platform.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.microprofile.metrics</groupId>
+      <artifactId>microprofile-metrics-api</artifactId>
+      <version>5.1.2</version>
     </dependency>
   </dependencies>
   <build>
