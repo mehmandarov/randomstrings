@@ -175,9 +175,13 @@ for more details.
 * `restore.sh` – a script for starting the application by restoring it from the snapshot
 * `start-up-no-crac.sh` – a script for starting the application containers without CRaC, can be used to have a base for the benchmarks.
 
+Script options:
+* `--runtime [quakrus|helidon]`, default value is `helidon`
+
 Run scripts from the root folder of this project, e.g.:
 
 ```bash
+# see above for info on --runtime option.
 ./src/scripts/crac/checkpoint.sh
 
 ./src/scripts/crac/restore.sh
