@@ -1,5 +1,5 @@
 # Step 1: Build the code using regular maven
-FROM maven:3.9.9-eclipse-temurin-21 AS maven
+FROM maven:3.9-eclipse-temurin-25 AS maven
 COPY pom-quarkus.xml /home/app/pom.xml
 WORKDIR /home/app
 RUN mvn verify -B --fail-never
@@ -9,7 +9,7 @@ RUN mvn package
 
 
 # Step 2: Get the app up and running
-FROM registry.access.redhat.com/ubi8/openjdk-21:1.19
+FROM registry.access.redhat.com/ubi8/openjdk-25:latest
 
 ENV LANGUAGE='en_US:en'
 

@@ -1,5 +1,5 @@
 # 1st stage, build the app
-FROM maven:3.9.9-eclipse-temurin-21 AS maven
+FROM maven:3.9-eclipse-temurin-25 AS maven
 WORKDIR /helidon
 
 # Create a first layer to cache the "Maven World" in the local repository.
@@ -16,7 +16,7 @@ RUN mvn package -DskipTests
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
-FROM azul/zulu-openjdk:21-jdk-crac-latest
+FROM azul/zulu-openjdk:25-jdk-crac-latest
 
 ENV CRAC_FILES_DIR=/opt/crac-files
 
