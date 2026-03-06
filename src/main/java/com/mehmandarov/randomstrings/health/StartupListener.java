@@ -2,7 +2,7 @@ package com.mehmandarov.randomstrings.health;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Destroyed;
-import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.event.Observes;
 import org.crac.Context;
 import org.crac.Core;
@@ -19,7 +19,7 @@ public class StartupListener implements Resource {
     private long fibonacciNumber = 0;
 
     public void init(@Observes
-                     @Initialized(ApplicationScoped.class) Object init) {
+                     Startup event) {
         System.out.println("*** ****** ***StartupListener initialized");
         String timestamp = System.getenv("START_COMMAND_TIMESTAMP_MS");
         if (timestamp != null) {
