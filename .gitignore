@@ -45,3 +45,6 @@ api-endpoints/.env
 # All .env files
 .env
 .env.*
+
+# CRaC folder
+crac-files/
