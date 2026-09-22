@@ -125,6 +125,50 @@ gcloud run deploy randomstrings-quarkus-crac  \
 ```
 </details>
 
+## AI Storyteller Feature (Trust by Design)
+
+This repository includes the `GET /api/story?about={input}` endpoint, which uses Google Cloud Vertex AI (Gemini) to generate short stories and Model Armor to secure the LLM interactions against prompt injection and data leaks.
+
+### Prerequisites & Setup
+
+To use the AI features locally or on Cloud Run, you need to configure your Google Cloud environment:
+
+1. **Enable the required APIs:**
+   ```bash
+   gcloud services enable aiplatform.googleapis.com
+   gcloud services enable networksecurity.googleapis.com
+   gcloud services enable dlp.googleapis.com
+   ```
+
+2. **Set up Application Default Credentials (ADC):**
+   The application uses Google Cloud ADC to authenticate with Vertex AI and Model Armor. To test locally, authenticate using:
+   ```bash
+   gcloud auth application-default login
+   ```
+
+3. **Configure the Environment Properties:**
+   By default, the application reads its configuration from `src/main/resources/application.properties`. You can override these using environment variables or by editing the properties file directly.
+   
+   Ensure the following properties are set correctly for your Google Cloud project:
+   ```properties
+   # Your Google Cloud Project ID
+   ai.project.id=my-project-id
+   
+   # Google Cloud location for Vertex AI and Model Armor (e.g., us-central1)
+   ai.location=us-central1
+   
+   # Model ID (e.g., gemini-1.5-flash)
+   ai.model=gemini-1.5-flash
+   
+   # Enable/Disable Model Armor integration
+   model.armor.enabled=true
+   
+   # Model Armor Template ID (full path)
+   model.armor.template=projects/my-project-id/locations/us-central1/modelArmorTemplates/my-template
+   ```
+
+For detailed step-by-step instructions on setting up the Cloud Armor, Model Armor, and Sensitive Data Protection features for the DevFest demo, please see the [SECURE_AI_STORYTELLER_DOCS.md](SECURE_AI_STORYTELLER_DOCS.md) file.
+
 ## Application Setup and Links
 ### Port Configuration
 Cloud Run uses port 8080 by default. All runtimes are configured to expose that port. These configurations are done in: 
