@@ -6,10 +6,10 @@ We add an AI-powered story generation endpoint to the `microprofile-randomstring
 
 ## Prerequisites
 
-1.  A Google Cloud Project with Billing enabled.
-2.  Enable Vertex AI API: `gcloud services enable aiplatform.googleapis.com`
-3.  Enable Model Armor API: `gcloud services enable networksecurity.googleapis.com`
-4.  Enable Sensitive Data Protection API: `gcloud services enable dlp.googleapis.com`
+Ensure you have completed the **AI Storyteller Feature (Trust by Design)** setup steps outlined in the main [README.md](README.md), including:
+- Enabling the required Google Cloud APIs (Vertex AI, Model Armor, SDP).
+- Setting up Application Default Credentials.
+- Configuring the required environment properties (`ai.project.id`, `ai.location`, etc.).
 
 ---
 
