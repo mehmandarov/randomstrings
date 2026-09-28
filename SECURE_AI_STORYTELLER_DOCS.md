@@ -76,7 +76,12 @@ To block Prompt Injections, Jailbreaks, and malicious URLs, we implement Model A
 
 ### Implementation
 
-1.  **Create a Model Armor Template** in the Google Cloud Console (Security > Model Armor) or via gcloud. Enable Prompt Injection, Jailbreak, and Malicious URL filters. Note the Template ID.
+1.  **Create a Model Armor Template via the GUI:**
+    *   In the Google Cloud Console, search for **Model Armor** (or navigate to Security > Model Armor).
+    *   Click **Create Template** and give it a name (e.g., `secure-storyteller-template`).
+    *   Under **Filters**, check the boxes for **Prompt injection**, **Jailbreak**, and **Malicious URLs**.
+    *   Ensure the action for these filters is set to **Block**.
+    *   Click **Create** and copy the full Template ID (e.g., `projects/YOUR_PROJECT/locations/global/modelArmorTemplates/secure-storyteller-template`).
 2.  **`ModelArmorClient.java`**: Added a MicroProfile RestClient to call `sanitizeUserPrompt` and `sanitizeModelResponse`.
 3.  **Controller Integration**: In `StoryController.java`, if `model.armor.enabled=true`, the prompt is routed through `ModelArmorClient` before hitting Gemini.
 4.  **Runtime Toggle**: We use MicroProfile Config to flip this on without redeploying.
@@ -97,9 +102,18 @@ To prevent the LLM from echoing Personally Identifiable Information (PII) into i
 
 ### Implementation
 
-1.  **Create an SDP De-identify Template** in Google Cloud Console. Set it to mask `EMAIL_ADDRESS`, `PHONE_NUMBER`, and `CREDIT_CARD_NUMBER` with a replacement string (e.g., `[EMAIL]`). Note the Template ID.
-2.  **Integration**: Model Armor integrates natively with SDP. Edit your Model Armor template to attach the SDP De-identify Template.
-3.  Because we already integrated Model Armor in Step 3, the prompt and response are automatically evaluated against the SDP policies.
+1.  **Create an SDP De-identify Template via the GUI:**
+    *   In the Google Cloud Console, search for **Sensitive Data Protection**.
+    *   Navigate to the **Configuration** tab and click **Create Template**.
+    *   Select **De-identify (masking) template**.
+    *   Under InfoTypes, select the data you want to protect (e.g., `EMAIL_ADDRESS`, `PHONE_NUMBER`, `CREDIT_CARD_NUMBER`).
+    *   Set the transformation rule to **Replace with InfoType name**. This ensures an email like `victim@example.com` safely becomes `[EMAIL_ADDRESS]`.
+    *   Click **Create** and note the Template ID.
+2.  **Attach SDP to Model Armor:**
+    *   Because Model Armor integrates natively with SDP, you don't need new code!
+    *   Go back to your **Model Armor** template in the console and click **Edit**.
+    *   Under the Data Protection section, select the SDP De-identify template you just created and attach it to both the prompt and response inspection settings.
+    *   Click **Save**.
 
 **The Fix (Demo):**
 ```bash
@@ -112,3 +126,34 @@ The resulting generated story will safely replace the data, stating something li
 ## Summary
 
 By applying these three layers—Cloud Armor at the edge, Model Armor at the model I/O, and SDP on the data—we have secured the "RandomStrings Storyteller" against the OWASP Top 10 for LLMs.
+
+---
+
+## Demo Reset Script
+
+If you are running this demo live and need to quickly reset the application to its initial, vulnerable state (before Step 3), you can run this script to turn off Model Armor on the deployed service:
+
+```bash
+#!/bin/bash
+# reset-demo.sh
+
+# Change these if you used different names during deployment
+REGION="europe-north1"
+SERVICE_NAME="randomstrings-quarkus-jvm"
+
+echo "1. Resetting $SERVICE_NAME to initial vulnerable state (Model Armor OFF)..."
+gcloud run services update $SERVICE_NAME \
+    --region=$REGION \
+    --update-env-vars=MODEL_ARMOR_ENABLED=false
+
+echo "2. Resetting Cloud Armor (Layer 1)..."
+# Remove the throttle rule so you can recreate it during the demo
+gcloud compute security-policies rules delete 1000 \
+    --security-policy=ai-front-door \
+    --quiet || true
+
+# (Optional) If you want to delete the entire policy instead of just the rule, uncomment the below:
+# gcloud compute security-policies delete ai-front-door --quiet || true
+
+echo "Demo reset complete! The endpoint is now fully vulnerable."
+```
