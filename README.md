@@ -91,11 +91,12 @@ You can turn off authentication for the applications by adding `--allow-unauthen
 after the deploy:_
 
 ```bash
-# You might be asked to choose a region when running this command.
+# You must specify a region when running this command.
 # Use the same region as the one you used for the deployment, here it is: europe-north1
 gcloud run services add-iam-policy-binding [SERVICE_NAME] \
     --member="allUsers" \
-    --role="roles/run.invoker"
+    --role="roles/run.invoker" \
+    --region="europe-north1"
 ```
 
 ### Creating a CRaC Enabled Application

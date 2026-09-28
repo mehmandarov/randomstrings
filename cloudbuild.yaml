@@ -31,6 +31,8 @@ steps:
       - '0'
       - '--max-instances'
       - '1'
+      - '--set-env-vars'
+      - 'AI_PROJECT_ID=$PROJECT_ID'
 images: ['${_LOCATION}-docker.pkg.dev/$PROJECT_ID/rndstrs/randomstrings-${_APP_RUNTIME}-${_APP_RUNTIME_FLAVOUR}']
 
 # SUBSTITUTION - example:
