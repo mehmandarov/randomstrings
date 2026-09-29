@@ -81,7 +81,7 @@ public class StoryController {
                         .add("text", prompt)
                         .build();
                 JsonObject sanitizeResponse = modelArmorClient.sanitizeUserPrompt(
-                        projectId, location, templateId, token, sanitizeRequest);
+                        templateId, token, sanitizeRequest);
                 
                 // For simplicity, just use the sanitized text (if supported) or block if finding is malicious
                 // The exact response format of Model Armor may vary, but let's assume it returns a "sanitizedText" field 
@@ -130,7 +130,7 @@ public class StoryController {
                         .add("text", generatedText)
                         .build();
                 JsonObject sanitizeRespResponse = modelArmorClient.sanitizeModelResponse(
-                        projectId, location, templateId, token, sanitizeRespRequest);
+                        templateId, token, sanitizeRespRequest);
                 
                 if (sanitizeRespResponse.containsKey("sanitizedText")) {
                      finalResponseText = sanitizeRespResponse.getString("sanitizedText");

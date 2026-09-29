@@ -11,7 +11,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.json.JsonObject;
 
 @RegisterRestClient(configKey = "model-armor-api")
-@Path("/v1/projects/{projectId}/locations/{location}/templates/{templateId}")
+@Path("/v1/{templateName : .+}")
 public interface ModelArmorClient {
 
     @POST
@@ -19,9 +19,7 @@ public interface ModelArmorClient {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject sanitizeUserPrompt(
-            @PathParam("projectId") String projectId,
-            @PathParam("location") String location,
-            @PathParam("templateId") String templateId,
+            @PathParam("templateName") String templateName,
             @HeaderParam("Authorization") String authorization,
             JsonObject request
     );
@@ -31,9 +29,7 @@ public interface ModelArmorClient {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject sanitizeModelResponse(
-            @PathParam("projectId") String projectId,
-            @PathParam("location") String location,
-            @PathParam("templateId") String templateId,
+            @PathParam("templateName") String templateName,
             @HeaderParam("Authorization") String authorization,
             JsonObject request
     );
