@@ -11,7 +11,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.json.JsonObject;
 
 @RegisterRestClient(configKey = "model-armor-api")
-@Path("/v1/projects/{projectId}/locations/{location}/modelArmorTemplates/{templateId}")
+@Path("/v1/projects/{projectId}/locations/{location}/templates/{templateId}")
 public interface ModelArmorClient {
 
     @POST
