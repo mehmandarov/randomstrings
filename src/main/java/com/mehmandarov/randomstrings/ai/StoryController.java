@@ -152,6 +152,12 @@ public class StoryController {
 
         } catch (IOException e) {
             return Json.createObjectBuilder().add("error", "Authentication error: " + e.getMessage()).build();
+        } catch (jakarta.ws.rs.WebApplicationException e) {
+            String body = "No body";
+            try {
+                body = e.getResponse().readEntity(String.class);
+            } catch (Exception ex) {}
+            return Json.createObjectBuilder().add("error", "API error: " + e.getMessage() + ", body: " + body).build();
         } catch (Exception e) {
             return Json.createObjectBuilder().add("error", "Server error: " + e.getMessage()).build();
         }
