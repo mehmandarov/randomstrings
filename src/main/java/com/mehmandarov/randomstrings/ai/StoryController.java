@@ -81,7 +81,7 @@ public class StoryController {
                         .add("text", prompt)
                         .build();
                 JsonObject sanitizeResponse = modelArmorClient.sanitizeUserPrompt(
-                        templateId, token, sanitizeRequest);
+                        templateId + ":sanitizeUserPrompt", token, sanitizeRequest);
                 
                 // For simplicity, just use the sanitized text (if supported) or block if finding is malicious
                 // The exact response format of Model Armor may vary, but let's assume it returns a "sanitizedText" field 
@@ -107,7 +107,7 @@ public class StoryController {
             JsonObject aiRequest = Json.createObjectBuilder().add("contents", contentsArray).build();
 
             JsonObject aiResponse = vertexAIClient.generateContent(
-                    projectId, location, model, token, aiRequest);
+                    projectId, location, model + ":generateContent", token, aiRequest);
 
             // Extract the generated text
             String generatedText = "";
@@ -130,7 +130,7 @@ public class StoryController {
                         .add("text", generatedText)
                         .build();
                 JsonObject sanitizeRespResponse = modelArmorClient.sanitizeModelResponse(
-                        templateId, token, sanitizeRespRequest);
+                        templateId + ":sanitizeModelResponse", token, sanitizeRespRequest);
                 
                 if (sanitizeRespResponse.containsKey("sanitizedText")) {
                      finalResponseText = sanitizeRespResponse.getString("sanitizedText");
@@ -159,6 +159,7 @@ public class StoryController {
             } catch (Exception ex) {}
             return Json.createObjectBuilder().add("error", "API error: " + e.getMessage() + ", body: " + body).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Json.createObjectBuilder().add("error", "Server error: " + e.getMessage()).build();
         }
     }

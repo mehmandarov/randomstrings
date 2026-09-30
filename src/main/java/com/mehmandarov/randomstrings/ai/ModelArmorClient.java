@@ -11,25 +11,23 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.json.JsonObject;
 
 @RegisterRestClient(configKey = "model-armor-api")
-@Path("/v1/{templateName : .+}")
+@Path("/v1/{templateNameAction}")
 public interface ModelArmorClient {
 
     @POST
-    @Path(":sanitizeUserPrompt")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject sanitizeUserPrompt(
-            @PathParam("templateName") String templateName,
+            @PathParam("templateNameAction") String templateNameAction,
             @HeaderParam("Authorization") String authorization,
             JsonObject request
     );
 
     @POST
-    @Path(":sanitizeModelResponse")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject sanitizeModelResponse(
-            @PathParam("templateName") String templateName,
+            @PathParam("templateNameAction") String templateNameAction,
             @HeaderParam("Authorization") String authorization,
             JsonObject request
     );

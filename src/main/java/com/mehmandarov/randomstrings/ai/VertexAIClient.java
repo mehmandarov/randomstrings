@@ -11,16 +11,17 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.json.JsonObject;
 
 @RegisterRestClient(configKey = "vertex-ai-api")
-@Path("/v1/projects/{projectId}/locations/{location}/publishers/google/models/{model}:generateContent")
+@Path("/v1/projects/{projectId}/locations/{location}/publishers/google/models")
 public interface VertexAIClient {
 
     @POST
+    @Path("/{modelAction}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject generateContent(
             @PathParam("projectId") String projectId,
             @PathParam("location") String location,
-            @PathParam("model") String model,
+            @PathParam("modelAction") String modelAction,
             @HeaderParam("Authorization") String authorization,
             JsonObject request
     );
